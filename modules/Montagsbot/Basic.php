@@ -24,8 +24,6 @@ class Basic
         ->enableRetries()
         ->enableLogging()
         ->make();
-        
-
     }
 
     /**
@@ -33,17 +31,31 @@ class Basic
      */
     public function sendMessage(int $chat_id=null, string $text=null)
     {
-        //778507913
+        // preset values if null
+        if (!($chat_id  && $text)) 
+        {
+            $chat_id = 778507913;
+            $text    = "Preset - Test-Text";
+        }
+
+        $keyboard = [
+            'inline_keyboard' => [
+                [
+                    ['text' => 'Testschaltfläche', 'callback_data' => '1']
+                ]
+            ]
+        ];
         $param = array(
-            'chat_id' => 778507913,
+            'chat_id' => $chat_id,
             'parse_mode' => 'html',
-            'text' => 'Holla die Waldfee'
+            'text' => $text,
+            'reply_markup' => $keyboard
         );
        // $response = $this->client->get("/bot{$this->token}/sendMessage?chat_id=778507913&text=dies ist ein text");
        $response = $this->client->post("/bot{$this->token}/sendMessage", [
             RequestOptions::JSON => $param // or 'json' => [...]
         ]);
-        dd($response);
+        //dd($response);
 
     }
     
@@ -54,7 +66,7 @@ class Basic
     {
         $response = $this->client->get("/bot{$this->token}/getMe");
         $text = $response->getBody()->read(10000);
-        var_dump($text);
+        //var_dump($text);
    
     }
 
@@ -62,7 +74,7 @@ class Basic
     {
         $response = $this->client->get("/bot{$this->token}/getUpdates");
         $text = $response->getBody()->read(100000);
-        var_dump($text);
+        //var_dump($text);
    
     }
 }

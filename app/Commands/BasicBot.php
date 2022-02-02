@@ -43,7 +43,7 @@ class BasicBot extends Command
         $basic = new Basic();
         $basic->getMe();
         $basic->getUpdates();
-        $basic->sendMessage();
+        $basic->sendMessage(778507913, "<i>Dies</i> <b>ist eine Testnachricht</b>");
         // $schedule->command(static::class)->everyMinute();
     }
 }
